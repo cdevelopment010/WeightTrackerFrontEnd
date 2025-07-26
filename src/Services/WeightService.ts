@@ -13,7 +13,7 @@ function getAuthHeaders(includeToken : boolean = true) : HeadersInit {
         if (token == null) {
             throw new Error("Not signed in!");
         }
-        headers['Authorization'] = `Bearer: ${token}`
+        headers['Authorization'] = `Bearer ${token}`
     }
 
     return headers;
@@ -60,17 +60,32 @@ export async function getWeightEntries() {
 
 
 export async function addWeightEntry(entry: WeightRecord) {
-
-    
-
-    if (entry.date == null){
-        entry.date = new Date().toISOString(); 
+    if (entry.Date == null){
+        entry.Date = new Date().toISOString(); 
     }
-
-    const res = await fetch(`${API_URL}/weight/${entry.date.substring(0,10)}`, {
+    const dto = { 
+        Weight: entry.Weight, 
+        MuscleMass: entry.MuscleMass, 
+        BodyFat: entry.BodyFat
+    }
+    const res = await fetch(`${API_URL}/weight/${entry.Date.substring(0,10)}`, {
         method: 'POST', 
         headers: getAuthHeaders(), 
-        body: JSON.stringify(entry)
+        body: JSON.stringify(dto)
+    }); 
+
+    if (!res.ok)
+    {
+        throw new Error(`Failed to add weight entry: ${res.status}`);
+    }
+
+    return await res.json();
+}
+
+export async function testPing() {
+    const res = await fetch(`${API_URL}/weight/test-ping`, {
+        method: 'GET', 
+        headers: getAuthHeaders()
     }); 
 
     if (!res.ok)

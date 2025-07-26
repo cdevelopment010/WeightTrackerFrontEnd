@@ -17,11 +17,25 @@ const router = createRouter({
     ]
 }); 
 
+// @ts-ignore
 router.beforeEach((to, from, next) => {
     //check localstorage for token. delete if expired. 
     const token = localStorage.getItem("weighttracker-token"); 
+    console.log("Token:", token)
+    console.log("From:", from.path, "To:", to.path)
+
+    const publicPaths = ["/login", "/register"]
+
+    if (publicPaths.includes(to.path)) {
+        return next();
+    }
+
+     if (!token) {
+        return next("/login");
+    }
+
     try { 
-        if (token == null ) { return }
+        if (token == null && from.path != "/login") { return next("/login") }
         const base64payload = token.split(".")[1];
         const payload = atob(base64payload); 
         const parsedToken = JSON.parse(payload); 

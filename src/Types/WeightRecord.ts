@@ -1,8 +1,8 @@
 export interface WeightRecord { 
     id?: number, 
     userId?: number, 
-    date: string,
-    weight: number,
-    muscleMass?: number, 
-    bodyFat?: number 
+    Date?: string,
+    Weight: number,
+    MuscleMass?: number, 
+    BodyFat?: number 
 }
