@@ -54,7 +54,17 @@ export async function login(login : { email: string, password: string}) {
 
 
 export async function getWeightEntries() {
+    const res = await fetch(`${API_URL}/weight`, {
+        method: 'GET', 
+        headers: getAuthHeaders()
+    }); 
 
+    if (!res.ok)
+    {
+        throw new Error(`Failed toget weights: ${res.status}`);
+    }
+
+    return await res.json();
 }
 
 

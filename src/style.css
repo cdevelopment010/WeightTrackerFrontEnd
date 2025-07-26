@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 * {
     box-sizing: border-box;
 }
@@ -5,6 +7,8 @@
 body {
     margin: 0; 
     padding: 0; 
+    background: #f9f9f9;
+    font-family: 'Inter', sans-serif;
 }
 
 .btn { 
@@ -19,8 +23,12 @@ body {
     border-color: black;
 }
 
+
+
 .component-container { 
     border-radius: 10px;
     border: 1px solid silver; 
+    box-shadow: 3px 3px 12px 0px silver;
     padding: 1rem; 
+    background: white;
 }

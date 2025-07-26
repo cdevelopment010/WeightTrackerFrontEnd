@@ -29,6 +29,8 @@
 import { ref} from "vue"; 
 import { addWeightEntry } from "../Services/WeightService";
 
+const emit = defineEmits(['entry-added'])
+
 const dateRef = ref<string>(new Date().toISOString().split("T")[0]); 
 const weightRef = ref<number>(0); 
 const bodyFatRef = ref<number | null>(null); 
@@ -52,6 +54,7 @@ const handleAddEntry = async () => {
             weightRef.value = 0;
             dateRef.value = new Date().toISOString().split("T")[0]
         }
+        emit('entry-added');
 
     } catch (err) {
         console.error(err);

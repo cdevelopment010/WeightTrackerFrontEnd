@@ -1,9 +1,9 @@
 <template>
     <Nav />
     <div class="container">
-        <div class="component-container weight">Weight Graph</div>
-        <AddEntry class=" add"/>
-        <div class="component-container  bodyfat">Body Fat Graph</div>
+        <WeightChart class="weight" :data="data" :chartKey="chartKey"/>
+        <AddEntry class="add" @entry-added="refreshData"/>
+        <BodyFatMuscleMass class="bodyfat" :data="data" :chartKey="chartKey" />
         <div class="component-container  recent">Recent entries</div>
         <div class="component-container  week">Week on Week comparison</div>
         <div class="component-container profile">Profile</div>
@@ -13,11 +13,27 @@
 <script setup lang="ts">
 import Nav from '../components/Nav.vue';
 import AddEntry from '../components/AddEntry.vue';
+import WeightChart from '../components/WeightChart.vue';
+import BodyFatMuscleMass from '../components/BodyFatMuscleMass.vue';
 // import { testPing } from '../Services/WeightService';
+import {ref } from "vue";
 import { onMounted } from 'vue';
+import { getWeightEntries } from '../Services/WeightService';
+
+const chartKey = ref<number>(0); 
+const data = ref<any>(); 
+
+const refreshData = async () => {
+    const dataRaw = await getWeightEntries();
+    data.value = dataRaw;
+    chartKey.value++; 
+}
 
 onMounted(async () => {
-    // await testPing(); 
+    const dataRaw = await getWeightEntries();
+    data.value = dataRaw;
+    chartKey.value++;
+    console.log(chartKey.value)
 })
 </script>
 
@@ -28,10 +44,10 @@ onMounted(async () => {
         display: grid; 
         grid-template-areas: 
             "weight weight weight weight weight weight weight weight add add add add"
-            "weight weight weight weight weight weight weight weight add add add add"
+            "weight weight weight weight weight weight weight weight recent recent recent recent"
             "bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat  recent recent recent recent"
             "bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat  recent recent recent recent"
-            "week week week week week week week week recent recent recent recent"
+            "week week week week week week week week profile profile profile profile"
             "week week week week week week week week profile profile profile profile"
             
             ;
