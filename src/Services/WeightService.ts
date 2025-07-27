@@ -105,3 +105,23 @@ export async function testPing() {
 
     return await res.json();
 }
+
+export async function getWeekComparison(from : Date, to: Date) {
+
+    const fromString = from.toISOString().substring(0,10)
+    const toString = to.toISOString().substring(0,10)
+    const res = await fetch(`${API_URL}/weight/summary/${fromString}/${toString}`, {
+        method: 'GET', 
+        headers: getAuthHeaders()
+    });
+
+    if (!res.ok)
+    {
+        throw new Error(`Failed to get summary data: ${res.status}`);
+    }
+
+    return await res.json();
+
+
+
+}

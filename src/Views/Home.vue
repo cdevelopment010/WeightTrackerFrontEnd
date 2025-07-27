@@ -5,7 +5,7 @@
         <AddEntry class="add" @entry-added="refreshData"/>
         <BodyFatMuscleMass class="bodyfat" :data="data" :chartKey="chartKey" />
         <div class="component-container  recent">Recent entries</div>
-        <div class="component-container  week">Week on Week comparison</div>
+        <WeekComparison class="week" :chartKey="chartKey"/>
         <div class="component-container profile">Profile</div>
     </div>
 </template>
@@ -15,6 +15,7 @@ import Nav from '../components/Nav.vue';
 import AddEntry from '../components/AddEntry.vue';
 import WeightChart from '../components/WeightChart.vue';
 import BodyFatMuscleMass from '../components/BodyFatMuscleMass.vue';
+import WeekComparison from '../components/WeekComparison.vue';
 // import { testPing } from '../Services/WeightService';
 import {ref } from "vue";
 import { onMounted } from 'vue';
@@ -43,12 +44,12 @@ onMounted(async () => {
         margin: 50px 120px; 
         display: grid; 
         grid-template-areas: 
+            "weight weight weight weight weight weight weight weight profile profile profile profile"
             "weight weight weight weight weight weight weight weight add add add add"
-            "weight weight weight weight weight weight weight weight recent recent recent recent"
             "bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat  recent recent recent recent"
             "bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat bodyfat  recent recent recent recent"
-            "week week week week week week week week profile profile profile profile"
-            "week week week week week week week week profile profile profile profile"
+            "week week week week week week week week recent recent recent recent"
+            "week week week week week week week week recent recent recent recent"
             
             ;
         grid-template-columns: repeat(12, 1fr);
